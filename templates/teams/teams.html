@@ -126,9 +126,9 @@
         <div class="col-md-12">
           <nav class="duca-pager" aria-label="{% trans %}Page{% endtrans %}">
             {% if teams.page != 1 %}
-              <a class="duca-pager-btn" href="{{ prev_page }}" aria-label="Previous page">&larr; <span>Prev</span></a>
+              <a class="duca-pager-btn" href="{{ prev_page }}" aria-label="Previous page">&lt; <span>Prev</span></a>
             {% else %}
-              <span class="duca-pager-btn disabled" aria-hidden="true">&larr; <span>Prev</span></span>
+              <span class="duca-pager-btn disabled" aria-hidden="true">&lt; <span>Prev</span></span>
             {% endif %}
 
             <label class="duca-pager-select">
@@ -142,9 +142,9 @@
             </label>
 
             {% if teams.next_num %}
-              <a class="duca-pager-btn" href="{{ next_page }}" aria-label="Next page"><span>Next</span> &rarr;</a>
+              <a class="duca-pager-btn" href="{{ next_page }}" aria-label="Next page"><span>Next</span> &gt;</a>
             {% else %}
-              <span class="duca-pager-btn disabled" aria-hidden="true"><span>Next</span> &rarr;</span>
+              <span class="duca-pager-btn disabled" aria-hidden="true"><span>Next</span> &gt;</span>
             {% endif %}
           </nav>
         </div>

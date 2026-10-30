@@ -12,8 +12,8 @@
     {{ Assets.css("assets/scss/main.scss") }}
   {% endblock %}
 
-  <link rel="stylesheet" href="{{ url_for('views.themes', theme='duca-club', path='duca/fonts/fonts.css') }}&v=8">
-  <link rel="stylesheet" href="{{ url_for('views.themes', theme='duca-club', path='duca/duca.css') }}&v=8">
+  <link rel="stylesheet" href="{{ url_for('views.themes', theme='duca-club', path='duca/fonts/fonts.css') }}&v=13">
+  <link rel="stylesheet" href="{{ url_for('views.themes', theme='duca-club', path='duca/duca.css') }}&v=13">
 
   {{ Plugins.styles }}
 
@@ -55,12 +55,15 @@
 <footer class="footer duca-footer">
   <div class="duca-ticker" aria-hidden="true">
     <div class="duca-ticker-track">
-      {% for i in range(2) %}<span>LEARN.</span><span>BUILD.</span><span>BREAK.</span><span>REPEAT.</span><span class="dot">/</span><span>CAPTURE THE FLAG</span><span class="dot">/</span>{% endfor %}
+      {% for g in range(2) %}
+      <div class="duca-ticker-group">
+        {% for i in range(6) %}<span>LEARN.</span><span>BUILD.</span><span>BREAK.</span><span>REPEAT.</span><span class="dot">/</span><span>CAPTURE THE FLAG</span><span class="dot">/</span>{% endfor %}
+      </div>
+      {% endfor %}
     </div>
   </div>
   <div class="container duca-footer-row">
-    <span class="duca-footer-brand">{{ Configs.ctf_name }} <em>&times; Deakin University Cybersecurity Association</em></span>
-    <a href="https://duca.au" target="_blank" rel="noopener" class="duca-footer-link">duca.au &#8599;</a>
+    <a href="https://duca.au" target="_blank" rel="noopener" class="duca-footer-link">duca.au</a>
     <a href="https://ctfd.io" class="duca-footer-link muted">{% trans %}Powered by CTFd{% endtrans %}</a>
   </div>
 </footer>
@@ -74,6 +77,6 @@
 {{ Plugins.scripts }}
 
 {{ Configs.theme_footer }}
-<script src="{{ url_for('views.themes', theme='duca-club', path='duca/duca.js') }}&v=8" defer></script>
+<script src="{{ url_for('views.themes', theme='duca-club', path='duca/duca.js') }}&v=13" defer></script>
 </body>
 </html>

@@ -155,7 +155,7 @@ main { padding-top: 0; }
 .jumbotron {
   position: relative;
   background: transparent !important;
-  border-bottom: 1px solid var(--duca-hair-soft);
+  border-bottom: 3px solid var(--duca-lime-fallback);
   padding: 7.5rem 0 3.25rem !important;
   margin-bottom: 1rem !important;
   overflow: hidden;
@@ -166,7 +166,7 @@ main { padding-top: 0; }
   background: var(--duca-lime-fallback);
   animation: duca-line 0.5s var(--duca-ease) forwards;
 }
-@keyframes duca-line { to { width: min(240px, 40%); } }
+@keyframes duca-line { to { width: 100%; } }
 .jumbotron h1 {
   font-size: clamp(38px, 6.2vw, 84px);
   margin: 0;
@@ -341,9 +341,9 @@ pre code { background: transparent; padding: 0; }
 .duca-reveal.in { opacity: 1; transform: none; }
 
 /* ───── Footer ───── */
-.duca-footer { margin-top: 4rem; padding: 0 !important; background: transparent; border-top: 1px solid var(--duca-hair-soft); }
+.duca-footer { margin-top: 0; padding: 0 !important; background: transparent; border-top: 1px solid var(--duca-hair-soft); }
 .duca-ticker { overflow: hidden; background: var(--duca-lime-fallback); color: var(--duca-on-lime); border-bottom: 2px solid var(--duca-ink); }
-.duca-ticker-track { display: flex; width: max-content; gap: 32px; padding: 10px 16px; font: 14px 'Silkscreen', monospace; letter-spacing: 0.06em; animation: duca-marquee 28s linear infinite; }
+.duca-ticker-track { display: flex; width: max-content; padding: 10px 0; font: 14px 'Silkscreen', monospace; letter-spacing: 0.06em; animation: duca-marquee 110s linear infinite; }
 .duca-ticker:hover .duca-ticker-track { animation-play-state: paused; }
 .duca-ticker .dot { opacity: 0.5; }
 @keyframes duca-marquee { to { transform: translateX(-50%); } }
@@ -435,3 +435,10 @@ a.duca-pager-btn:hover { background: var(--duca-lime-fallback); border-color: va
 .modal .nav-tabs { padding-bottom: 14px; margin-bottom: 8px; border-bottom: 1px solid var(--duca-hair); align-items: center; }
 .modal .nav-tabs .nav-link { margin-bottom: 0; }
 .modal .nav-tabs .nav-link:focus, .modal .nav-tabs .nav-link:focus-visible { outline-offset: 2px; box-shadow: none; }
+
+.duca-ticker-group { display: flex; flex: 0 0 auto; gap: 32px; padding-right: 32px; }
+.duca-footer-row { justify-content: flex-start; }
+.duca-footer-link { margin: 0; }
+main { padding-bottom: 4rem; }
+
+.duca-footer-row { justify-content: space-between; }
