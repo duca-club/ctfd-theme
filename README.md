@@ -8,9 +8,9 @@ A dark, playful [CTFd](https://ctfd.io) theme for the Deakin University Cybersec
 
 - **DUCA look and feel.** Near-black surfaces, hairline borders, pill buttons, the lime accent, and the same type stack as the main site (Archivo, Hanken Grotesk, Space Mono, Silkscreen), self-hosted so nothing loads from a third party.
 - **Dark only.** The theme forces dark mode and removes the light/dark toggle.
-- **A custom landing page** with the DUCA logo, drifting code characters that scatter away from your cursor, and magnetic buttons. It replaces the stock CTFd index page.
+- **A custom landing page** with the DUCA logo over a field of drifting code characters that scatter away from your cursor. It replaces the stock CTFd index page.
 - **Restyled everything else.** Navbar, forms, tables, the challenge board and modal, scoreboard, profiles, notifications, pagination and the Top 10 / score-over-time charts.
-- **Small touches.** A scrolling `LEARN. BUILD. BREAK. REPEAT.` ticker in the footer, a spotlight that follows your cursor over challenge tiles, scroll-reveal on cards, and a Konami code. Everything respects `prefers-reduced-motion`.
+- **Small touches.** A scrolling `LEARN. BUILD. BREAK. REPEAT.` ticker in the footer, a spotlight that follows your cursor over challenge tiles, and scroll-reveal on cards. Everything respects `prefers-reduced-motion`.
 - **Nothing broken.** It is the stock CTFd core theme with a DUCA layer on top, so all CTFd features keep working.
 
 More screenshots are in the [Screenshots](#screenshots) section below.

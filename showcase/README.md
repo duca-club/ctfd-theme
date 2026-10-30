@@ -4,7 +4,7 @@ Screenshots of the DUCA theme running against the demo dataset (`testing/seed-da
 
 ## Landing page
 
-Landing page. The DUCA logo, drifting code characters that scatter away from the cursor, and magnetic buttons.
+Landing page. The DUCA logo over a field of drifting code characters that scatter away from the cursor.
 
 ![Landing page](img/01-landing.png)
 
