@@ -43,7 +43,7 @@ You need Docker with Compose. From the repo root:
 ```bash
 cd testing
 docker compose up -d     # CTFd + MariaDB + Redis on http://127.0.0.1:8001
-./seed.sh                # loads the demo dataset (teams, challenges, solves, players)
+./scripts/seed.sh        # loads the demo dataset (teams, challenges, solves, players)
 ```
 
 Then open http://127.0.0.1:8001. Logins:
@@ -64,7 +64,7 @@ theme/        The CTFd theme. This is the thing you deploy.
     assets/     Prebuilt CTFd core JS/CSS (some chart bundles are patched)
     duca/       Everything DUCA: duca.css, duca.js, landing.*, fonts, logo
   sync-min.sh   Regenerates the .min copies CTFd asks for
-testing/      Local test stack: docker-compose, demo dataset, seeding, reset
+testing/      Local test stack: docker-compose, demo dataset, scripts/ to seed and reset
 showcase/     Screenshots (img/) and the script that regenerates them
 ```
 

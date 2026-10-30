@@ -64,7 +64,7 @@ Landing page on a phone.
 
 ## Regenerating
 
-Start the test stack and load the dataset (`docker compose up -d && ./seed.sh` in [../testing](../testing)), then:
+Start the test stack and load the dataset (`docker compose up -d && ./scripts/seed.sh` in [../testing](../testing)), then:
 
 ```bash
 python -m venv .venv

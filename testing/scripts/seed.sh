@@ -5,14 +5,14 @@
 #
 # THIS REPLACES EVERYTHING in the instance, including accounts and settings.
 #
-#   ./seed.sh          # asks first
-#   YES=1 ./seed.sh    # no prompt
+#   ./scripts/seed.sh          # asks first
+#   YES=1 ./scripts/seed.sh    # no prompt
 #
-# Works on a brand new instance (no ./setup.sh needed) and on one that is
+# Works on a brand new instance (no ./scripts/setup.sh needed) and on one that is
 # already set up. Logins afterwards:
 #   admin / admin-password      demo / demo-password
 set -euo pipefail
-cd "$(dirname "$0")"
+cd "$(dirname "$0")/.."   # run from testing/, where docker-compose.yml lives
 
 zip="seed-data/duca-demo.zip"
 [[ -f "$zip" ]] || { echo "missing $zip" >&2; exit 1; }

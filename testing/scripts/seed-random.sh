@@ -2,13 +2,13 @@
 # Optional: generates NEW random data on top of what is already there, using
 # CTFd's own populate.py (fake users, teams, challenges, solves, awards, wrong
 # submissions), then adds a demo player. Additive; never deletes anything.
-# For the standard, repeatable dataset use ./seed.sh instead.
+# For the standard, repeatable dataset use ./scripts/seed.sh instead.
 #
 #
-#   ./seed-random.sh                      # 60 users, 12 teams, 30 challenges
-#   USERS=200 TEAMS=30 ./seed-random.sh   # bigger
+#   ./scripts/seed-random.sh                      # 60 users, 12 teams, 30 challenges
+#   USERS=200 TEAMS=30 ./scripts/seed-random.sh   # bigger
 set -euo pipefail
-cd "$(dirname "$0")"
+cd "$(dirname "$0")/.."   # run from testing/, where docker-compose.yml lives
 
 USERS="${USERS:-60}"
 TEAMS="${TEAMS:-12}"
@@ -32,7 +32,7 @@ else
 fi
 
 echo "Creating the demo player..."
-dc exec -T -u root ctfd python - < seed_demo.py 2>&1 | grep -v -i "RemovedIn20Warning\|Loaded module\|alembic"
+dc exec -T -u root ctfd python - < scripts/seed_demo.py 2>&1 | grep -v -i "RemovedIn20Warning\|Loaded module\|alembic"
 
 dc exec -T cache redis-cli flushall >/dev/null
 echo "Done. Reload the site."

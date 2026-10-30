@@ -8,7 +8,7 @@ Needs Docker with Compose and `curl`. Run commands from this directory.
 
 ```bash
 docker compose up -d     # CTFd 3.8.9 + MariaDB + Redis -> http://127.0.0.1:8001
-./seed.sh                # loads the demo dataset, no setup wizard needed
+./scripts/seed.sh        # loads the demo dataset, no setup wizard needed
 ```
 
 | Role   | Username | Password         |
@@ -16,19 +16,27 @@ docker compose up -d     # CTFd 3.8.9 + MariaDB + Redis -> http://127.0.0.1:8001
 | Admin  | `admin`  | `admin-password` |
 | Player | `demo`   | `demo-password`  |
 
-## Files
+## Layout
 
-| File                      | What it does |
-| ------------------------- | ------------ |
-| `docker-compose.yml`      | CTFd, MariaDB and Redis. Mounts `../theme` read-only as the `duca-club` theme. Bound to localhost only. |
-| `seed-data/duca-demo.zip` | The demo dataset: a CTFd export with 14 teams, 61 players (including `demo`), 30 challenges with hints, 122 solves, 1,854 submissions, 122 awards and ratings. Theme and settings are already configured. |
-| `seed.sh`                 | **Imports the dataset.** Replaces everything in the instance (asks first, `YES=1` to skip), clears the cache and restarts CTFd. |
-| `export.sh`               | Re-exports the running instance into `seed-data/duca-demo.zip`. Use it when you change the data you want to ship. |
-| `sanitize_export.py`      | Used by `export.sh`: swaps the admin account for `admin`, drops fake file records and writes the zip deterministically. |
-| `setup.sh`                | Optional. Runs the `/setup` wizard over HTTP for an empty instance (no demo data). |
-| `seed-random.sh`          | Optional. Adds *new* random data on top using CTFd's own `populate.py`, plus the `demo` player. |
-| `seed_demo.py`            | Used by `seed-random.sh` to create the `demo` player and team. |
-| `reset.sh`                | Stops the stack and deletes all test data after a confirmation prompt. |
+```
+docker-compose.yml        CTFd, MariaDB and Redis. Mounts ../theme read-only as the duca-club theme. Localhost only.
+seed-data/
+  duca-demo.zip           The demo dataset: a CTFd export with 14 teams, 61 players (including demo),
+                          30 challenges with hints, 122 solves, 1,854 submissions, 122 awards and ratings.
+                          Theme and settings are already configured.
+scripts/
+  seed.sh                 Imports the dataset. Replaces everything in the instance (asks first, YES=1 to skip),
+                          clears the cache and restarts CTFd.
+  export.sh               Re-exports the running instance into seed-data/duca-demo.zip.
+  sanitize_export.py      Used by export.sh: swaps the admin account for admin, drops fake file records,
+                          writes the zip deterministically.
+  reset.sh                Stops the stack and deletes all test data after a confirmation prompt.
+  setup.sh                Optional. Runs the /setup wizard over HTTP for an empty instance (no demo data).
+  seed-random.sh          Optional. Adds NEW random data on top with CTFd's populate.py, plus the demo player.
+  seed_demo.py            Used by seed-random.sh to create the demo player and team.
+```
+
+Run the scripts from anywhere (`testing/scripts/seed.sh` or `./scripts/seed.sh`); they switch to `testing/` themselves.
 
 ## Options
 
@@ -47,17 +55,17 @@ Set these as environment variables.
 | `DEMO_USER` / `DEMO_PASSWORD`     | `demo` / `demo-password`      | seed_demo.py       |
 
 ```bash
-USERS=300 TEAMS=40 CHALLENGES=60 ./seed-random.sh   # pile on a big random board
+USERS=300 TEAMS=40 CHALLENGES=60 ./scripts/seed-random.sh   # pile on a big random board
 ```
 
 ## Notes
 
-- **Same data every time.** `seed.sh` imports a fixed export, so screenshots, bug reports and the showcase all line up. It is a full import: everything already in the instance is replaced.
+- **Same data every time.** `scripts/seed.sh` imports a fixed export, so screenshots, bug reports and the showcase all line up. It is a full import: everything already in the instance is replaced.
 - **The data is lorem ipsum.** Names, descriptions and categories came from Faker, so it is good for testing layout and states, not for realistic copy.
-- **No personal data in the zip.** `export.sh` replaces the admin account and drops file records before writing it. Check `git diff --stat` after re-exporting anyway.
+- **No personal data in the zip.** `scripts/export.sh` replaces the admin account and drops file records before writing it. Check `git diff --stat` after re-exporting anyway.
 - **Uploaded files are not included.** The fake challenges list no downloads.
 - **Same CTFd version only.** The export carries CTFd 3.8.9's schema; importing into another version may fail. Bump the image tag in `docker-compose.yml` and re-export together.
-- **`seed-random.sh` is not repeatable.** `populate.py` collides with its own rows if run twice; use `reset.sh` then `seed.sh` to start clean.
+- **`scripts/seed-random.sh` is not repeatable.** `populate.py` collides with its own rows if run twice; use `scripts/reset.sh` then `scripts/seed.sh` to start clean.
 - **Theme edits show up on refresh.** The theme is bind-mounted. Template changes need `docker compose restart ctfd`; CSS and JS need a hard refresh (or bump the `&v=` number, see the main README). After changing data directly, clear the cache with `docker compose exec cache redis-cli flushall`.
-- **The data directory is owned by root** (the containers write it), which is why `reset.sh` deletes it from inside a container.
+- **The data directory is owned by root** (the containers write it), which is why `scripts/reset.sh` deletes it from inside a container.
 - **Running two copies side by side:** `COMPOSE_PROJECT_NAME=other CTFD_PORT=8002 DATA_DIR=/some/dir docker compose up -d`.

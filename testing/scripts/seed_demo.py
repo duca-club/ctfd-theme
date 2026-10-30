@@ -1,6 +1,6 @@
 """Creates a demo player (and team) so you can log in and see the player UI.
 
-Run through seed.sh. Needs the CTFd app context, so it is piped into the
+Run through seed-random.sh. Needs the CTFd app context, so it is piped into the
 container's python rather than run on the host.
 """
 import os
