@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en" data-bs-theme="dark">
+<head>
+  <title>{{ title or Configs.ctf_name }}</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="shortcut icon" href="{{ Configs.ctf_small_icon }}" type="image/x-icon">
+
+  {{ meta | safe }}
+
+  {% block stylesheets %}
+    {{ Assets.css("assets/scss/main.scss") }}
+  {% endblock %}
+
+  <link rel="stylesheet" href="{{ url_for('views.themes', theme='duca-club', path='duca/fonts/fonts.css') }}&v=8">
+  <link rel="stylesheet" href="{{ url_for('views.themes', theme='duca-club', path='duca/duca.css') }}&v=8">
+
+  {{ Plugins.styles }}
+
+  {{ Assets.js("assets/js/color_mode_switcher.js", type=None) }}
+
+  <script type="text/javascript">
+      window.init = {
+          'urlRoot': "{{ request.script_root }}",
+          'csrfNonce': "{{ Session.nonce }}",
+          'userMode': "{{ Configs.user_mode }}",
+          'userId': {{ Session.id }},
+          'userName': {{ User.name | tojson }},
+          'userEmail': {{ User.email | tojson }},
+          'userVerified': {{ User.verified | tojson }},
+          'teamId': {{ Team.id | tojson }},
+          'teamName': {{ Team.name | tojson }},
+          'start': {{ Configs.start | tojson }},
+          'end': {{ Configs.end | tojson }},
+          'themeSettings': {{ Configs.theme_settings | tojson }},
+          'eventSounds': [
+            "/themes/duca-club/static/sounds/notification.webm",
+            "/themes/duca-club/static/sounds/notification.mp3",
+          ],
+      }
+  </script>
+
+  {{ Configs.theme_header }}
+</head>
+<body>
+{% include "components/navbar.html" %}
+
+<main role="main">
+  {% block content %}
+  {% endblock %}
+</main>
+
+{% include "components/snackbar.html" %}
+
+<footer class="footer duca-footer">
+  <div class="duca-ticker" aria-hidden="true">
+    <div class="duca-ticker-track">
+      {% for i in range(2) %}<span>LEARN.</span><span>BUILD.</span><span>BREAK.</span><span>REPEAT.</span><span class="dot">/</span><span>CAPTURE THE FLAG</span><span class="dot">/</span>{% endfor %}
+    </div>
+  </div>
+  <div class="container duca-footer-row">
+    <span class="duca-footer-brand">{{ Configs.ctf_name }} <em>&times; Deakin University Cybersecurity Association</em></span>
+    <a href="https://duca.au" target="_blank" rel="noopener" class="duca-footer-link">duca.au &#8599;</a>
+    <a href="https://ctfd.io" class="duca-footer-link muted">{% trans %}Powered by CTFd{% endtrans %}</a>
+  </div>
+</footer>
+
+{% include "components/notifications.html" %}
+
+{% block scripts %}
+  {{ Assets.js("assets/js/page.js") }}
+{% endblock %}
+
+{{ Plugins.scripts }}
+
+{{ Configs.theme_footer }}
+<script src="{{ url_for('views.themes', theme='duca-club', path='duca/duca.js') }}&v=8" defer></script>
+</body>
+</html>

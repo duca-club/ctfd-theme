@@ -1,0 +1,44 @@
+services:
+  ctfd:
+    image: ctfd/ctfd:latest
+    user: root
+    restart: unless-stopped
+    ports:
+      - "127.0.0.1:8001:8000"
+    environment:
+      - UPLOAD_FOLDER=/var/uploads
+      - DATABASE_URL=mysql+pymysql://ctfd:ctfd@db/ctfd
+      - REDIS_URL=redis://cache:6379
+      - WORKERS=1
+      - LOG_FOLDER=/var/log/CTFd
+      - ACCESS_LOG=-
+      - ERROR_LOG=-
+      - REVERSE_PROXY=false
+      - SECRET_KEY=local-dev-only-not-secret
+    volumes:
+      - ./.data/CTFd/logs:/var/log/CTFd
+      - ./.data/CTFd/uploads:/var/uploads
+      # mount this repo as a theme; select "duca-club" in Admin > Config > Theme
+      - .:/opt/CTFd/CTFd/themes/duca-club:ro
+    depends_on:
+      - db
+      - cache
+
+  db:
+    image: mariadb:10.11
+    restart: unless-stopped
+    environment:
+      - MARIADB_ROOT_PASSWORD=ctfd
+      - MARIADB_USER=ctfd
+      - MARIADB_PASSWORD=ctfd
+      - MARIADB_DATABASE=ctfd
+      - MARIADB_AUTO_UPGRADE=1
+    volumes:
+      - ./.data/mysql:/var/lib/mysql
+    command: [mysqld, --character-set-server=utf8mb4, --collation-server=utf8mb4_unicode_ci, --wait_timeout=28800, --log-warnings=0]
+
+  cache:
+    image: redis:7-alpine
+    restart: unless-stopped
+    volumes:
+      - ./.data/redis:/data
