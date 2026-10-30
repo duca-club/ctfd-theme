@@ -218,4 +218,23 @@ __marimo__/
 
 # Streamlit
 .streamlit/secrets.toml
+
+# --- DUCA CTFd theme ---------------------------------------------------------
+# Local test instance state (database, uploads, redis). Root-owned by Docker.
+testing/.data/
 .data/
+
+# Local env overrides for the test stack
+.env
+testing/.env
+
+# Screenshot tooling
+.venv/
+showcase/.venv/
+node_modules/
+
+# Editors / OS
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db

@@ -1,10 +1,14 @@
+# Local CTFd test instance with the DUCA theme mounted in.
+# Run from this directory:  docker compose up -d
+name: duca-ctfd
+
 services:
   ctfd:
-    image: ctfd/ctfd:latest
+    image: ctfd/ctfd:3.8.9
     user: root
     restart: unless-stopped
     ports:
-      - "127.0.0.1:8001:8000"
+      - "127.0.0.1:${CTFD_PORT:-8001}:8000"
     environment:
       - UPLOAD_FOLDER=/var/uploads
       - DATABASE_URL=mysql+pymysql://ctfd:ctfd@db/ctfd
@@ -14,12 +18,14 @@ services:
       - ACCESS_LOG=-
       - ERROR_LOG=-
       - REVERSE_PROXY=false
+      # local testing only, never reuse this value anywhere real
       - SECRET_KEY=local-dev-only-not-secret
     volumes:
-      - ./.data/CTFd/logs:/var/log/CTFd
-      - ./.data/CTFd/uploads:/var/uploads
-      # mount this repo as a theme; select "duca-club" in Admin > Config > Theme
-      - .:/opt/CTFd/CTFd/themes/duca-club:ro
+      - ${DATA_DIR:-./.data}/CTFd/logs:/var/log/CTFd
+      - ${DATA_DIR:-./.data}/CTFd/uploads:/var/uploads
+      # the theme, read-only. Select "duca-club" in Admin > Config > Theme
+      # (setup.sh does this for you).
+      - ../theme:/opt/CTFd/CTFd/themes/duca-club:ro
     depends_on:
       - db
       - cache
@@ -34,11 +40,11 @@ services:
       - MARIADB_DATABASE=ctfd
       - MARIADB_AUTO_UPGRADE=1
     volumes:
-      - ./.data/mysql:/var/lib/mysql
+      - ${DATA_DIR:-./.data}/mysql:/var/lib/mysql
     command: [mysqld, --character-set-server=utf8mb4, --collation-server=utf8mb4_unicode_ci, --wait_timeout=28800, --log-warnings=0]
 
   cache:
     image: redis:7-alpine
     restart: unless-stopped
     volumes:
-      - ./.data/redis:/data
+      - ${DATA_DIR:-./.data}/redis:/data

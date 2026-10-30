@@ -1,0 +1,34 @@
+<link rel="stylesheet" href="{{ url_for('views.themes', theme='duca-club', path='duca/landing.css') }}&v=5">
+
+<section class="lp-hero" id="lp-hero">
+  <canvas class="lp-canvas" id="lp-canvas" aria-hidden="true"></canvas>
+
+  <div class="lp-hero-inner container">
+    <div class="lp-logo-wrap" id="lp-logo-wrap">
+      <span class="lp-ring lp-ring-1"></span>
+      <span class="lp-ring lp-ring-2"></span>
+      <img class="lp-logo" id="lp-logo" src="{{ url_for('views.themes', theme='duca-club', path='duca/duca.png') }}" alt="DUCA logo" draggable="false">
+    </div>
+
+    <p class="lp-eyebrow">// Deakin University Cybersecurity Association</p>
+    <h1 class="lp-title">{{ Configs.ctf_name }}</h1>
+    <p class="lp-sub">Capture the flag, free for everyone. Pick a challenge, break something, climb the board.</p>
+
+    <div class="lp-cta">
+      {% if authed() %}
+        <a class="lp-btn lp-btn-primary" data-magnetic href="{{ url_for('challenges.listing') }}">Play challenges <span aria-hidden="true">&gt;</span></a>
+        <a class="lp-btn" data-magnetic href="{{ url_for('scoreboard.listing') }}">Scoreboard</a>
+      {% else %}
+        {% if registration_visible() %}
+          <a class="lp-btn lp-btn-primary" data-magnetic href="{{ url_for('auth.register') }}">Join the CTF <span aria-hidden="true">&gt;</span></a>
+        {% endif %}
+        <a class="lp-btn lp-btn-ghost" data-magnetic href="{{ url_for('scoreboard.listing') }}">Scoreboard</a>
+      {% endif %}
+    </div>
+
+    <p class="lp-countdown" id="lp-countdown" hidden></p>
+  </div>
+
+</section>
+
+<div class="lp-toast" id="lp-toast" role="status" aria-live="polite"></div>
